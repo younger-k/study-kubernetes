@@ -87,3 +87,50 @@ kuberctl krew install {플러그인이름}
 
 Pod 생성
 ---
+### Pod?
+- 쿠버네티스에서 배포 가능한 가장 작은 컴퓨팅 단위
+- 도커의 컨테이너 집합과 유사.
+- 파드 안에 여러개의 컨테이너가 가능하나 보통 하나만 둠.
+  - cf. side car pattern?
+    ![파드 디자인 패턴](./img/pod-design-pattern.png)
+    - 하나의 파드에 메인 컨테이너를 더럽히기 싫을 때 사용
+    - 서브로 로그를 처리하거나 파드 내 로컬 캐시용으로 쓰는듯 함.
+
+### Pod를 만들어보자.
+```yaml
+# nginx-pod.yml
+apiVersion: v1
+kind: Pod # api-resource
+metadata:
+  name: my-nginx
+spec:
+  containers:
+  - name: my-nginx-container
+    image: nginx:latest
+    ports:
+    - containerPort: 80
+      protocol: TCP
+```
+
+```bash
+kubectl apply -f nginx-pod.yml # 파드 생성
+# pod/my-nginx created
+
+kgp # 파드 조회
+# NAME       READY   STATUS    RESTARTS   AGE
+# my-nginx   1/1     Running   0          34s
+
+kgs # 상태 조회
+# NAME         TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE
+# kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   8d
+```
+
+- 기본적으로 호스트와 격리된 상태로 pod가 생성됨.
+```bash
+curl http://10.96.0.1
+# curl: (28) Failed to connect to 10.96.0.1 port 80 after 75008 ms: Couldn't connect to server
+# 파드는 만들어졌지만 답이 돌아오지 않는다...
+```
+- 같은 네임스페이스 내 pod간 네트워크 공유는 가능하다.
+```
+```
