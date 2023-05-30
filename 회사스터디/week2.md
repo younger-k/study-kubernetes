@@ -166,3 +166,37 @@ kubectl run curl -it --rm --image=curlimages/curl sh
 
 과제) 플러그인 조사해보기
 --
+### kail
+- kubernetes tail
+  - cli 환경에서 파드 로그 확인용 플러그인
+- [깃헙 링크](https://github.com/boz/kail)
+
+```bash
+# 설치
+kubectl krew install tail
+
+# 로그 확인 실행
+kubectl tail
+```
+
+- 별도의 옵션을 주지 않으면 클러스터 내 모든 pod 로그 출력
+- 셀렉터를 이용하여 필터링 가능
+
+| Flag                               | Selection                                                                                                                     |
+|------------------------------------|-------------------------------------------------------------------------------------------------------------------------------|
+|  `-l, --label LABEL-SELECTOR`      | match pods based on a [standard label selector](https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/)    |
+|  `-p, --pod NAME`                  | match pods by name                                                                                                            |
+|  `-n, --ns NAMESPACE-NAME`         | match pods in the given namespace                                                                                             |
+|  `--svc NAME`                      | match pods belonging to the given service                                                                                     |
+|  `--rc NAME`                       | match pods belonging to the given replication controller                                                                      |
+|  `--rs NAME`                       | match pods belonging to the given replica set                                                                                 |
+|  `-d, --deploy NAME`               | match pods belonging to the given deployment                                                                                  |
+|  `--sts NAME`                      | match pods belonging to the given statefulset                                                                                 |
+|  `-j, --job NAME`                  | match pods belonging to the given job                                                                                         |
+|  `--node NODE-NAME`                | match pods running on the given node                                                                                          |
+|  `--ing NAME`                      | match pods belonging to services targeted by the given ingress                                                                |
+|  `-c, --containers CONTAINER-NAME` | restrict which containers logs are shown for                                                                                  |
+|  `--ignore LABEL-SELECTOR`         | Ignore pods that the selector matches. (default: `kail.ignore=true`)                                                          |
+|  `--current-ns`                    | Match pods in the namespace specified in Kubernetes' "current context"                                                        |
+|  `--ignore-ns NAME`                | Ignore pods in the given namespaces.  Overridden by `--ns`, `--current-ns`. (default: `kube-system`)                          |
+
