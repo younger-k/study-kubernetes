@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: replicaset-my-web
+spec:
+  replicas: 4
+  selector: # Definition Replicaset
+    matchExpressions:
+      - key: type
+        values:
+          - app-v1
+          - app-v2
+        operator: In
+  template: # Definition Pods
+    metadata:
+      name: my-busybox-pod
+      labels:
+        app: my-web-app
+        type: app-v1
+    spec:
+      containers:
+        - name: my-web
+          image: busybox
+          args: ["tail","-f","/dev/null"]
+        - name: my-web2
+          image: busybox
+          args: ["tail","-f","/dev/null"]
