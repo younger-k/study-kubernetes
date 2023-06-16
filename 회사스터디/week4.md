@@ -141,7 +141,7 @@ kubectl rollout history deployment my-nginx-deployment
   ```bash
   kubectl annotate deployments.apps my-nginx-deployment kubernetes.io/change-cause="nginx version updated to 1.25.0"
   ```
-
+- `.spec.revisionHistoryLimit` 필드로 Revision 개수를 지정할 수 있다. default = 10
 #### undo
 
 - 당시 버전의 replicas는 반영이 안됨.
@@ -151,7 +151,3 @@ kubectl rollout history deployment my-nginx-deployment
 ```bash
 kubectl rollout undo deployment my-nginx-deployment --to-revision=2
 ```
-
-
-숙제) 디플로이먼트 하위 옵션 조사하기
---
