@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Pod # api-resource 종류
+metadata:
+  name: my-nginx-test
+  labels:
+    app: my-nginx-test
+spec:
+  containers:
+    - name: my-nginx-test-container
+      image: nginx:latest
+      ports:
+        - containerPort: 80
+          protocol: TCP
